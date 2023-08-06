@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Heading, ITheme, useTheme } from 'native-base';
 import { HeaderTitleProps } from '@react-navigation/elements';
 import Login from '../../screens/Login/Login';
+import TForm from '../../screens/TForm';
 
 const Stack = createNativeStackNavigator<PublicStackParamList>();
 function getHeaderTitle(theme: ITheme) {
@@ -33,7 +34,7 @@ export default function PublicRoutes(): JSX.Element {
       <Stack.Screen
         options={{ headerShown: false }}
         name="Login"
-        component={Login}
+        component={TForm}
       />
     </Stack.Navigator>
   );
