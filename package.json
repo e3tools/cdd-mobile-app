@@ -52,7 +52,7 @@
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.7",
     "reactotron-react-native": "^5.0.1",
-    "tcomb-form-native": "https://github.com/Vizir/tcomb-form-native.git#feat/picker-from-community-lib",
+    "tcomb-form-native": "https://github.com/e3tools/tcomb-form-native",
     "tcomb-json-schema": "^0.3.2"
   },
   "devDependencies": {
