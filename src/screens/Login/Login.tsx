@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-
+import React, { useContext, useRef, useState } from 'react';
 import {
   Keyboard,
   Text,
@@ -22,53 +21,68 @@ import MESSAGES from '../../utils/formErrorMessages';
 import { emailRegex, passwordRegex } from '../../utils/formUtils';
 import AuthContext from '../../contexts/auth';
 import API from '../../services/API';
+import moment from 'moment';
+import { Button } from 'react-native';
+var t = require('tcomb-form-native');
+
+var Form = t.form.Form;
+
+// here we are: define your domain model
+var Person = t.struct({
+  name: t.String,              // a required string
+  surname: t.maybe(t.String),  // an optional string
+  age: t.Number,               // a required number
+  rememberMe: t.Boolean ,       // a boolean
+  gender: t.enums({M: 'Male', F: 'Female'}, 'gender'),
+  birthday: t.Date
+}); 
+const options = {
+    fields: {
+      birthday: {
+        mode: 'date',
+        config: {
+          format: (date) => moment(date).format('YYYY-mm-d'),
+        }, 
+      }
+    }
+};
+
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, JSON.stringify(value));
+}
+
+function getInitialState() {
+  const value = {};
+  return { value, type: this.getType(value) };
+}
+
+function onChange(value) {
+  // recalculate the type only if strictly necessary
+  const type = value.gender !== this.state.value.gender ?
+    this.getType(value) :
+    this.state.type;
+  this.setState({ value, type });
 }
 
 function Login() {
   const { signIn } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
+  const form = useRef(null);
+  const [isPickerShow, setIsPickerShow] = useState(false);
+  const [date, setDate] = useState(new Date(Date.now()));
 
-  const onLoginPress = async data => {
-    setLoading(true);
-
-    await new API()
-      .login({ username: data?.email, password: data?.password })
-      .then(response => {
-        setLoading(false);
-        if (response.error) {
-          return;
-        }
-        signIn(response);
-        save('session', response);
-      })
-      .catch(error => {
-        setLoading(false);
-        console.error(error);
-      });
-    setLoading(false);
-    // show error
+  const showPicker = () => {
+    setIsPickerShow(true);
   };
 
-  // TODO: move this session validation logic to main routes
-  // useEffect(() => {
-  //   async function getValueFor(key: string) {
-  //     const result = await SecureStore.getItemAsync(key);
-  //     if (result) {
-  //       await onLoginPress(JSON.parse(result));
-  //     } else {
-  //     }
-  //   }
-  //   getValueFor('session');
-  // }, []);
-
-  const { control, handleSubmit, errors } = useForm({
-    criteriaMode: 'all',
-  });
-
+  const onChange = (event, value) => {
+    setDate(value);
+    if (Platform.OS === 'android') {
+      setIsPickerShow(false);
+    }
+  };
   return (
     <ScrollView
       style={{
@@ -127,132 +141,22 @@ function Login() {
                 }}
                 behavior="padding"
               >
-                <View style={[styles.formContainer]}>
-                  <View
-                    style={{
-                      borderRadius: 10,
-                      marginBottom: 16,
-                    }}
-                  >
-                    <Controller
-                      control={control}
-                      render={({ onChange, onBlur, value }) => (
-                        <HStack style={styles.loginInputContainer} space={2}>
-                          <MaterialCommunityIcons
-                            name="account-outline"
-                            color="#24c38b"
-                            size={24}
-                          />
-                          <TextInput
-                            placeholder="Nom d'utilisateur"
-                            style={{
-                              flex: 1,
-                            }}
-                            onBlur={onBlur}
-                            onChangeText={value => onChange(value)}
-                            value={value}
-                            autoCapitalize="none"
-                          />
-                        </HStack>
-                      )}
-                      name="email"
-                      rules={{
-                        required: {
-                          value: true,
-                          message: MESSAGES.required,
-                        },
-                      }}
-                      defaultValue=""
-                    />
-                    {errors.email && (
-                      <Text style={styles.errorText}>
-                        {errors.email.message}
-                      </Text>
-                    )}
-                    <View style={{ height: 10 }} />
-                    <Controller
-                      control={control}
-                      render={({ onChange, onBlur, value }) => (
-                        <HStack style={styles.loginInputContainer} space={2}>
-                          <Ionicons
-                            onPress={() =>
-                              setIsPasswordSecure(!isPasswordSecure)
-                            }
-                            name={
-                              isPasswordSecure
-                                ? 'eye-off-outline'
-                                : 'eye-outline'
-                            }
-                            color="#24c38b"
-                            size={24}
-                          />
-                          <TextInput
-                            placeholder="Mot de passe"
-                            style={{
-                              flex: 1,
-                            }}
-                            value={value}
-                            onBlur={onBlur}
-                            onChangeText={onChange}
-                            secureTextEntry={isPasswordSecure}
-                          />
-                        </HStack>
-                      )}
-                      name="password"
-                      rules={{
-                        required: {
-                          value: true,
-                          message: MESSAGES.required,
-                        },
-                        minLength: {
-                          value: 8,
-                          message: MESSAGES.minLength,
-                        },
-                        pattern: {
-                          value: passwordRegex,
-                          message: MESSAGES.password,
-                        },
-                        maxLength: {
-                          value: 40,
-                          message: MESSAGES.maxLength,
-                        },
-                      }}
-                      defaultValue=""
-                    />
-                    {errors.password && (
-                      <Text style={styles.errorText}>
-                        {errors.password.message}
-                      </Text>
-                    )}
-                  </View>
+                 <View>
+         {/* The button that used to trigger the date picker */}
+    <Text>ddd</Text>
+
+                  {/* display */}
+                  <Form
+                    ref={form}
+                    type={Person}
+                    options={options}
+                  />
+
                 </View>
               </KeyboardAvoidingView>
+            
             </View>
 
-            <View
-              style={{
-                backgroundColor: 'white',
-              }}
-            >
-              {loading ? (
-                <ActivityIndicator color="#24c38b" />
-              ) : (
-                <TouchableOpacity
-                  style={{
-                    height: 42,
-                    borderRadius: 7,
-                    backgroundColor: '#24c38b',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    paddingHorizontal: 20,
-                  }}
-                  onPress={handleSubmit(onLoginPress)}
-                >
-                  <Text style={{ color: 'white' }}>SE CONNECTER</Text>
-                </TouchableOpacity>
-              )}
-            </View>
             <View />
           </View>
         </TouchableWithoutFeedback>
