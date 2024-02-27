@@ -4624,9 +4624,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.668:
-  version "1.4.682"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.682.tgz#27577b88ccccc810e09b05093345cf1830f1bd65"
-  integrity sha512-oCglfs8yYKs9RQjJFOHonSnhikPK3y+0SvSYc/YpYJV//6rqc0/hbwd0c7vgK4vrl6y2gJAwjkhkSGWK+z4KRA==
+  version "1.4.683"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.683.tgz#b68167ed66dbea01feb86915aca92c09bc1b651a"
+  integrity sha512-FmopjiJjkUzqa5F5Sv+wxd8KimtCxyLFOFgRPwEeMLVmP+vHH/GjNGCuIYrCIchbMSiOe+nG/OPBbR/XoExBNA==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -8314,8 +8314,9 @@ pouchdb-abstract-mapreduce@8.0.1:
     pouchdb-md5 "8.0.1"
     pouchdb-utils "8.0.1"
 
-"pouchdb-adapter-asyncstorage@file:../pouchdb-react-native/packages/pouchdb-adapter-asyncstorage":
+"pouchdb-adapter-asyncstorage@https://github.com/e3tools/pouchdb-adapter-asyncstorage":
   version "8.0.1-beta-1"
+  resolved "https://github.com/e3tools/pouchdb-adapter-asyncstorage#5b51d9e0626c6fe10a150d07280945680ad7f2ab"
   dependencies:
     "@react-native-async-storage/async-storage" "^1.22.2"
     atob "2.1.1"
@@ -8577,10 +8578,11 @@ pouchdb-promise@6.4.3, pouchdb-promise@^6.1.2, pouchdb-promise@~6.4.0:
   dependencies:
     lie "3.1.1"
 
-"pouchdb-react-native@file:../pouchdb-react-native/packages/pouchdb-react-native":
+"pouchdb-react-native@https://github.com/e3tools/pouchdb-react-native":
   version "8.0.1-beta-1"
+  resolved "https://github.com/e3tools/pouchdb-react-native#1edd18b25c471ebda13a5d159830bf2f40c13064"
   dependencies:
-    pouchdb-adapter-asyncstorage "file:../../../AppData/Local/Yarn/Cache/v6/npm-pouchdb-react-native-8.0.1-beta-1-db48a982-a8fb-41fc-917f-7e83aa77bc68-1709060815216/node_modules/pouchdb-adapter-asyncstorage"
+    pouchdb-adapter-asyncstorage "https://github.com/e3tools/pouchdb-adapter-asyncstorage"
     pouchdb-adapter-http "8.0.1"
     pouchdb-core "8.0.1"
     pouchdb-mapreduce "8.0.1"
