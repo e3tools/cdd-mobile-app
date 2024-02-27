@@ -1,6 +1,6 @@
 
 //Change the baseURL to the backend server base url
-const baseURL = 'https://your-domain/';
+const baseURL = 'https://your-domain/'; // 'http://cdd-env.eba-mz2nppu7.us-west-1.elasticbeanstalk.com/';
 export { baseURL };
 function handleErrors(response) {
   if (response.non_field_errors) {
