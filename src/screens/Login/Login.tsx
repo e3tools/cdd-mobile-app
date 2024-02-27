@@ -136,7 +136,7 @@ function Login() {
                                     >
                                         <Controller
                                             control={control}
-                                            render={({ field: { onChange, onBlur, value } }) => (
+                                            render={({ onChange, onBlur, value }) => (
                                                 <HStack style={styles.loginInputContainer} space={2}>
                                                     <MaterialCommunityIcons
                                                         name="account-outline"
@@ -172,7 +172,7 @@ function Login() {
                                         <View style={{ height: 10 }} />
                                         <Controller
                                             control={control}
-                                            render={({ field: { onChange, onBlur, value } }) => (
+                                            render={({ onChange, onBlur, value }) => (
                                                 <HStack style={styles.loginInputContainer} space={2}>
                                                     <Ionicons
                                                         onPress={() =>

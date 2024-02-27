@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+import 'react-native-get-random-values';
 import { NativeBaseProvider } from 'native-base';
 // import { Provider } from 'react-redux';
 // import { store } from 'store';

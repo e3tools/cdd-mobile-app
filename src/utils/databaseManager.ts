@@ -29,7 +29,7 @@ export const SyncToRemoteDatabase = async ({
   }
   // console.log(username, password);
   //change <couch-ip> to the endpoint for couchdb
-  const remoteDB = new PouchDB(`http://<couch-ip>:5984/${no_sql_db_name}`, {
+  const remoteDB = new PouchDB(`http://54.183.195.20:5984/${no_sql_db_name}`, {
     skip_setup: true,
   });
   try {
